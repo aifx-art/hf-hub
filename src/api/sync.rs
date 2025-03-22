@@ -568,7 +568,8 @@ mod tests {
     use super::*;
     use crate::api::Siblings;
     use hex_literal::hex;
-    use rand::{distributions::Alphanumeric, Rng};
+    use rand::{ Rng};
+    use rand_distr::Alphanumeric;
     use serde_json::{json, Value};
     use sha2::{Digest, Sha256};
 

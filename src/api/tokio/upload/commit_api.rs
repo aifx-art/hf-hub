@@ -267,16 +267,22 @@ impl From<CommitOperationAdd> for CommitOperation {
     }
 }
 
+/// docs
 #[derive(Debug, Error)]
 pub enum CommitError {
+    /// docs
     #[error("no commit message passed")]
-    NoMessage,
+    NoMessage, 
+    /// docs
     #[error("invalid OID for parent commit")]
     InvalidOid,
+    /// docs
     #[error("failed to parse huggingface ID: {0}")]
     InvalidHuggingFaceId(#[from] InvalidHfIdError),
+    /// docs
     #[error("error from HF api: {0}")]
     Api(#[from] ApiError),
+    /// docs
     #[error("i/o error: {0}")]
     Io(#[from] io::Error),
 }

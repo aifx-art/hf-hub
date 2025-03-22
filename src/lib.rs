@@ -1,7 +1,7 @@
 #![deny(missing_docs)]
 #![doc = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/README.md"))]
 #[cfg(any(feature = "tokio", feature = "ureq"))]
-use rand::{distributions::Alphanumeric, Rng};
+use rand::{ Rng};
 use std::io::Write;
 use std::path::PathBuf;
 use std::str::FromStr;
@@ -135,6 +135,8 @@ impl Cache {
 
     #[cfg(any(feature = "tokio", feature = "ureq"))]
     pub(crate) fn temp_path(&self) -> PathBuf {
+        use rand_distr::Alphanumeric;
+
         let mut path = self.path().clone();
         path.push("tmp");
         std::fs::create_dir_all(&path).ok();
