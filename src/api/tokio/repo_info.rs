@@ -36,7 +36,11 @@ impl ApiRepo {
                 .model_info(&self.repo.repo_id, Some(&self.repo.revision))
                 .await?
                 .into()),
-            RepoType::Dataset => todo!(),
+            RepoType::Dataset =>Ok(self
+                .api
+                .dataset_info(&self.repo.repo_id, Some(&self.repo.revision))
+                .await?
+                .into()),
             RepoType::Space => todo!(),
         }
     }
@@ -114,6 +118,36 @@ impl Api {
             )
         } else {
             format!("{}/api/models/{repo_id}", self.endpoint)
+        };
+
+        // TODO add params for security status, blobs, expand, etc.
+
+        let model_info: ModelInfo = self
+            .client
+            .get(url)
+            .send()
+            .await?
+            .maybe_hf_err()
+            .await?
+            .json()
+            .await?;
+
+        Ok(model_info)
+    }
+
+    async fn dataset_info(
+        &self,
+        repo_id: &str,
+        revision: Option<&str>,
+    ) -> Result<ModelInfo, ApiError> {
+        let url = if let Some(revision) = revision {
+            format!(
+                "{}/api/datasets/{repo_id}/revision/{}",
+                self.endpoint,
+                urlencoding::encode(revision)
+            )
+        } else {
+            format!("{}/api/datasets/{repo_id}", self.endpoint)
         };
 
         // TODO add params for security status, blobs, expand, etc.

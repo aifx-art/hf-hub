@@ -1,4 +1,4 @@
-#![deny(missing_docs)]
+//#![deny(missing_docs)]
 #![doc = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/README.md"))]
 #[cfg(any(feature = "tokio", feature = "ureq"))]
 use rand::{ Rng};
@@ -295,7 +295,8 @@ impl Repo {
         match self.repo_type {
             RepoType::Model => self.repo_id.to_string(),
             RepoType::Dataset => {
-                format!("datasets/{}", self.repo_id)
+                //format!("datasets/{}", self.repo_id)
+                format!("{}", self.repo_id)
             }
             RepoType::Space => {
                 format!("spaces/{}", self.repo_id)

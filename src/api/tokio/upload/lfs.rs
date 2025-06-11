@@ -83,6 +83,7 @@ fn lfs_endpoint(repo_type: RepoType, repo_id: &str) -> String {
         RepoType::Dataset => "datasets/",
         RepoType::Space => "spaces/",
     };
+    println!("prefix {}",prefix);
     format!("{}{}.git", prefix, repo_id)
 }
 
